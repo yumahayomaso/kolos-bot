@@ -3,8 +3,12 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+ENTRYPOINT ls
+
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
-WORKDIR "/src"
+WORKDIR /src
+
+ENTRYPOINT ls
 
 COPY ["Untappd.KolosBot/Untappd.KolosBot.csproj", "Untappd.KolosBot/"]
 COPY ["Untappd.KolosBot.Infrastucture/Untappd.KolosBot.Infrastucture.csproj", "Untappd.KolosBot.Infrastucture/"]
