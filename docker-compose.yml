@@ -3,7 +3,7 @@ services:
   untappd.kolosbot: 
     build: 
       context: "."
-      dockerfile: Untappd.KolosBot/Dockerfile
+      dockerfile: src/Untappd.KolosBot/Untappd.KolosBot/Dockerfile
     environment: 
       - "BOT_TOKEN=${BOT_TOKEN}"
     image: aspnetapp
