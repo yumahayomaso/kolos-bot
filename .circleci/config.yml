@@ -23,6 +23,3 @@ jobs:
          docker push registry.heroku.com/$HEROKU_APP_NAME/web                
          curl https://cli-assets.heroku.com/install.sh | sh
          heroku container:release web -a $HEROKU_APP_NAME
-     -run:
-         environemnt:
-             BOT_TOKEN: ${BOT_TOKEN}
