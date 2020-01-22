@@ -34,12 +34,16 @@ namespace Untappd.KolosBot
             //_botClient.SendTextMessageAsync(new ChatId(352541299), "Daun it's me'");
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            var port = Environment.GetEnvironmentVariable("PORT");
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                        .UseUrls("http://*:" + port);
                 });
+        }
 
         static async void Bot_OnMessage(object sender, MessageEventArgs e)
         {
