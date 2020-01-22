@@ -20,11 +20,11 @@ namespace Untappd.KolosBot
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            
-            //_dbContext = (KolosDbContext)host.Services.GetService(typeof(KolosDbContext));
-            
 
-            _botClient = new TelegramBotClient("TOKEN HERE");
+            //_dbContext = (KolosDbContext)host.Services.GetService(typeof(KolosDbContext));
+
+            var token = Environment.GetEnvironmentVariable("BOT_TOKEN");
+            _botClient = new TelegramBotClient(token);
             //var me = _botClient.GetMeAsync().Result;
             _botClient.OnMessage += Bot_OnMessage;
             
@@ -85,7 +85,7 @@ namespace Untappd.KolosBot
             if (yosaList.Any(x => e.Message.Text.Contains(x)))
             {
                 var rand = new Random();
-                var randIndex = rand.Next(0, yosaJokeList.Count) - 1;
+                var randIndex = rand.Next(0, yosaJokeList.Count - 1);
                 await _botClient.SendTextMessageAsync(
                     chatId: e.Message.Chat,
                     text: yosaJokeList[randIndex]
