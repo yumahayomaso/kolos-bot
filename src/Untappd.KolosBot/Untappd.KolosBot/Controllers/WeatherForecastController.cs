@@ -20,9 +20,7 @@ namespace Untappd.KolosBot.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var botClient = new TelegramBotClient("926979704:AAGGACK5icmibmSyrVpIwWS8uFl2DTsBqjo");
-            var me = await botClient.GetMeAsync();
-            return Ok($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
+            return Ok();
         }
     }
 }
