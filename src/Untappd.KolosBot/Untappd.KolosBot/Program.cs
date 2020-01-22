@@ -45,7 +45,6 @@ namespace Untappd.KolosBot
                 Debug.WriteLine(e.Message);
                 Debug.WriteLine(e.StackTrace);
             }
-            //_botClient.SendTextMessageAsync(new ChatId(352541299), "Daun it's me'");
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args)
