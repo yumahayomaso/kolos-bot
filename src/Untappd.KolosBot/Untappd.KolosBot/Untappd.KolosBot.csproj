@@ -4,5 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Telegram.Bot" Version="15.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Untappd.KolosBot.Infrastucture\Untappd.KolosBot.Infrastucture.csproj" />
+  </ItemGroup>
+
 
 </Project>
