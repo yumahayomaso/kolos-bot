@@ -1,11 +1,10 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
-WORKDIR "/app"
+WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
-WORKDIR "/src"
-
+WORKDIR /src
 COPY ["Untappd.KolosBot/Untappd.KolosBot.csproj", "Untappd.KolosBot/"]
 COPY ["Untappd.KolosBot.Infrastucture/Untappd.KolosBot.Infrastucture.csproj", "Untappd.KolosBot.Infrastucture/"]
 RUN dotnet restore "Untappd.KolosBot/Untappd.KolosBot.csproj"
