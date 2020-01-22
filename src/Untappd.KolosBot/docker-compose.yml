@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  untappd.kolosbot:
+    image: ${DOCKER_REGISTRY-}untappdkolosbot
+    build:
+      context: .
+      dockerfile: Untappd.KolosBot/Dockerfile
