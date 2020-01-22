@@ -4,13 +4,13 @@ EXPOSE 80
 EXPOSE 443
 
 FROM alpine
-CMD ls
+ENTRYPOINT ls
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 
 FROM alpine
-CMD ls
+ENTRYPOINT ls
 
 COPY ["Untappd.KolosBot/Untappd.KolosBot.csproj", "Untappd.KolosBot/"]
 COPY ["Untappd.KolosBot.Infrastucture/Untappd.KolosBot.Infrastucture.csproj", "Untappd.KolosBot.Infrastucture/"]
