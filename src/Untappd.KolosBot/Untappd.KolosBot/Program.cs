@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,10 @@ namespace Untappd.KolosBot
 
         public static void Main(string[] args)
         {
+            try
+            {
+
+            
             var host = CreateHostBuilder(args).Build();
 
             //_dbContext = (KolosDbContext)host.Services.GetService(typeof(KolosDbContext));
@@ -31,12 +36,25 @@ namespace Untappd.KolosBot
             _botClient.StartReceiving();
 
             host.Run();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                
+                Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.StackTrace);
+            }
             //_botClient.SendTextMessageAsync(new ChatId(352541299), "Daun it's me'");
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             var port = Environment.GetEnvironmentVariable("PORT");
+            
+            Console.WriteLine(port);
+            Debug.WriteLine(port);
+            
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
