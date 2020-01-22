@@ -82,7 +82,7 @@ namespace Untappd.KolosBot
                 );
             }
 
-            if (yosaList.Any(x => e.Message.Text.Contains(x)))
+            if (e.Message.Text != null && yosaList.Any(x => e.Message.Text.Contains(x)))
             {
                 var rand = new Random();
                 var randIndex = rand.Next(0, yosaJokeList.Count - 1);
