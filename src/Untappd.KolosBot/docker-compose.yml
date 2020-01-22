@@ -1,10 +1,9 @@
-version: '3.4'
-
-services:
-  untappd.kolosbot:
-    image: aspnetapp
-	environment:
-      - BOT_TOKEN=${BOT_TOKEN}
-    build:
-      context: .
+version: "3.4" 
+services: 
+  untappd.kolosbot: 
+    build: 
+      context: "."
       dockerfile: Untappd.KolosBot/Dockerfile
+    environment: 
+      - "BOT_TOKEN=${BOT_TOKEN}"
+    image: aspnetapp
