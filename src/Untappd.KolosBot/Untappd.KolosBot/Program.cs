@@ -26,10 +26,10 @@ namespace Untappd.KolosBot
             
             var host = CreateHostBuilder(args).Build();
 
-            //_dbContext = (KolosDbContext)host.Services.GetService(typeof(KolosDbContext));
+                //_dbContext = (KolosDbContext)host.Services.GetService(typeof(KolosDbContext));
 
-            var token = Environment.GetEnvironmentVariable("BOT_TOKEN");
-            _botClient = new TelegramBotClient(token);
+                var token = Environment.GetEnvironmentVariable("BOT_TOKEN");
+                _botClient = new TelegramBotClient(token);
             //var me = _botClient.GetMeAsync().Result;
             _botClient.OnMessage += Bot_OnMessage;
             
@@ -86,7 +86,7 @@ namespace Untappd.KolosBot
             }
 
 
-            if (e.Message.Text == "/pidor")
+            if (e.Message.Text.Contains("/pidor"))
             {
                 await Task.Delay(5000);
                 await _botClient.SendTextMessageAsync(
@@ -129,7 +129,8 @@ namespace Untappd.KolosBot
             "Йондзолик",
             "Йонзолик",
             "Йосиф",
-            "Йосип"
+            "Йосип",
+            "Йося"
         };
         
         private static List<string> yosaJokeList = new List<string>
@@ -142,7 +143,12 @@ namespace Untappd.KolosBot
             "Педрило як твоє очко?",
             "ЙОООСА ПЕДДДИК",
             "Шо там по педрилам, Йоса?",
-            "Йоса вот скажи ти педик?",
+            "Йоса, та ладно ми і так знаємо шо ти педрило",
+            "За попередніми даними Йондза педик",
+            "АЛО, ПРІЙОМ, ПЕДРИЛО Йос",
+            "Була би срака, а Йоса появиться",
+            "ТСН(НОВИНИ): В Червонограді згвалтували хлопчика в очко всі думають на Йодзолика",
+            "HOW DARE YOU?>>>yosyf pedrilo",
         };
     }
 }
