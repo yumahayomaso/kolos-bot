@@ -70,8 +70,7 @@ namespace Untappd.KolosBot.Infrastucture
                 var beerName = beerDetails.SelectSingleNode("//a").InnerText;
                 var beerType = beerDetails.SelectSingleNode("//em").InnerText;
                 var abvIbuAndBrewery = beerDetails.SelectSingleNode("//h6").InnerText.Replace("\n", string.Empty);
-                var rating = beerDetails.SelectSingleNode("//div[@class='caps small']").Attributes["data-rating"]
-                    .Value;
+                var rating = beerDetails.SelectSingleNode("//div[@class='caps small']")?.Attributes["data-rating"]?.Value;
 
                 var beerPrices = pageDocument.DocumentNode.SelectSingleNode("//div[@class='beer-prices']");
 
@@ -114,7 +113,8 @@ namespace Untappd.KolosBot.Infrastucture
             stringBuilder.AppendLine($"*{Name}*");
             stringBuilder.AppendLine($"{Type}");
             stringBuilder.AppendLine($"{AbvAndIbu}");
-            stringBuilder.AppendLine($"Rating:{Rating}");
+            if(!string.IsNullOrWhiteSpace(Rating))
+                stringBuilder.AppendLine($"Rating:{Rating}");
             stringBuilder.AppendLine($"{Prices}");
 
             return stringBuilder.ToString();

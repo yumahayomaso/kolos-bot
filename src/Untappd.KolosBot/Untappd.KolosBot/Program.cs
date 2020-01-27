@@ -22,26 +22,19 @@ namespace Untappd.KolosBot
         {
             try
             {
+                var host = CreateHostBuilder(args).Build();
+                var token =  Environment.GetEnvironmentVariable("BOT_TOKEN");
+                _botClient = new TelegramBotClient(token);
+                _botClient.OnMessage += Bot_OnMessage;
+                _botClient.StartReceiving();
 
-            
-            var host = CreateHostBuilder(args).Build();
-
-            //_dbContext = (KolosDbContext)host.Services.GetService(typeof(KolosDbContext));
-
-            var token = Environment.GetEnvironmentVariable("BOT_TOKEN");
-            _botClient = new TelegramBotClient(token);
-            //var me = _botClient.GetMeAsync().Result;
-            _botClient.OnMessage += Bot_OnMessage;
-            
-            _botClient.StartReceiving();
-
-            host.Run();
+                host.Run();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
-                
+
                 Debug.WriteLine(e.Message);
                 Debug.WriteLine(e.StackTrace);
             }
@@ -50,75 +43,67 @@ namespace Untappd.KolosBot
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             var port = Environment.GetEnvironmentVariable("PORT");
-            
-            Console.WriteLine(port);
-            Debug.WriteLine(port);
-            
+
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                        .UseUrls("http://*:" + port);
+                    .UseUrls("http://*:" + port);
                 });
         }
 
         static async void Bot_OnMessage(object sender, MessageEventArgs e)
         {
-            //if (!await _dbContext.Users.AnyAsync(x => x.Id == e.Message.Chat.Id))
-            //{
-            //    _dbContext.Users.Add(new User {Id = e.Message.Chat.Id});
-            //}
-
-            if (e.Message.Text == "/pio")
+            try
             {
-                var parser = new UntappdParser();
-                var beers = await parser.GetBeers();
-
-                foreach (var beer in beers)
+                if (e.Message.Text == "/pio")
                 {
-                    await _botClient.SendPhotoAsync(e.Message.Chat.Id, new InputOnlineFile(new Uri(beer.ImageUrl)));
+                    var parser = new UntappdParser();
+                    var beers = await parser.GetBeers();
+
+                    foreach (var beer in beers)
+                    {
+                        await _botClient.SendPhotoAsync(e.Message.Chat.Id, new InputOnlineFile(new Uri(beer.ImageUrl)));
+                        await _botClient.SendTextMessageAsync(
+                            chatId: e.Message.Chat,
+                            text: beer.ToString(),
+                            ParseMode.Markdown
+                        );
+                    }
+                }
+
+
+                if (e.Message.Type == MessageType.Text && e.Message.Text.Contains("/pidor"))
+                {
+                    await Task.Delay(5000);
                     await _botClient.SendTextMessageAsync(
                         chatId: e.Message.Chat,
-                        text: beer.ToString(),
-                        ParseMode.Markdown
-                        );
+                        text: "Оййй та бля пацани"
+                    );
+                    await _botClient.SendTextMessageAsync(
+                        chatId: e.Message.Chat,
+                        text: "І так панятно що"
+                    );
+                    await _botClient.SendTextMessageAsync(
+                        chatId: e.Message.Chat,
+                        text: "ЙОНЗА ПЕДРИЛО"
+                    );
+                }
+
+                if (e.Message.Text != null && yosaList.Any(x => e.Message.Text.Contains(x)))
+                {
+                    var rand = new Random();
+                    var randIndex = rand.Next(0, yosaJokeList.Count - 1);
+                    await _botClient.SendTextMessageAsync(
+                        chatId: e.Message.Chat,
+                        text: yosaJokeList[randIndex]
+                    );
                 }
             }
-
-
-            if (e.Message.Text == "/pidor")
+            catch (Exception exception)
             {
-                await Task.Delay(5000);
-                await _botClient.SendTextMessageAsync(
-                    chatId: e.Message.Chat,
-                    text: "Оййй та бля пацани"
-                );
-                await _botClient.SendTextMessageAsync(
-                    chatId: e.Message.Chat,
-                    text: "І так панятно що"
-                );
-                await _botClient.SendTextMessageAsync(
-                    chatId: e.Message.Chat,
-                    text: "ЙОНЗА ПЕДРИЛО"
-                );
+                // ignored
             }
-
-            if (e.Message.Text != null && yosaList.Any(x => e.Message.Text.Contains(x)))
-            {
-                var rand = new Random();
-                var randIndex = rand.Next(0, yosaJokeList.Count - 1);
-                await _botClient.SendTextMessageAsync(
-                    chatId: e.Message.Chat,
-                    text: yosaJokeList[randIndex]
-                );
-            }
-            //if (e.Message.Text != null)
-            //{
-            //    await _botClient.SendTextMessageAsync(
-            //        chatId: e.Message.Chat,
-            //        text: "You said:\n" + e.Message.Text
-            //    );
-            //}
         }
 
         private static List<string> yosaList = new List<string>()
@@ -131,7 +116,7 @@ namespace Untappd.KolosBot
             "Йосиф",
             "Йосип"
         };
-        
+
         private static List<string> yosaJokeList = new List<string>
         {
             "Йоса педик",
