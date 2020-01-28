@@ -32,7 +32,7 @@ namespace Untappd.KolosBot
                 _botClient.StartReceiving();
 
                 _timer = new Timer();
-                _timer.Interval = TimeSpan.FromMinutes(28).Milliseconds;
+                _timer.Interval = TimeSpan.FromMinutes(28).TotalMilliseconds;
                 _timer.AutoReset = true;
                 _timer.Elapsed += delegate(object sender, ElapsedEventArgs eventArgs)
                 {
