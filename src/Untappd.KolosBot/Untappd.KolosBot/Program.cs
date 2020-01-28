@@ -21,7 +21,8 @@ namespace Untappd.KolosBot
                 var host = CreateHostBuilder(args).Build();
                 //TODO move to startup
                 //var webhook = await _botClient.GetWebhookInfoAsync();
-                await _botClient.SetWebhookAsync($"https://zkolos-bot.herokuapp.com:{Environment.GetEnvironmentVariable("PORT")}/webhook");
+                await _botClient.SetWebhookAsync($"https://zkolos-bot.herokuapp.com/webhook");
+                
 
                 host.Run();
             }

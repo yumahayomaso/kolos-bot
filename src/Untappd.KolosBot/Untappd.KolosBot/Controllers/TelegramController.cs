@@ -28,7 +28,7 @@ namespace Untappd.KolosBot.Controllers
         }
 
         [HttpPost("webhook")]
-        public async Task<IActionResult> MessageUpdate(Update update)
+        public async Task<IActionResult> MessageUpdate([FromBody]Update update)
         {
             var message = update.Message;
             try
