@@ -16,5 +16,9 @@
     <ProjectReference Include="..\Untappd.KolosBot.Infrastucture\Untappd.KolosBot.Infrastucture.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
 
 </Project>
