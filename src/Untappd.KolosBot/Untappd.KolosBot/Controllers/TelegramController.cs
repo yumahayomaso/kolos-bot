@@ -30,6 +30,7 @@ namespace Untappd.KolosBot.Controllers
         [HttpPost("webhook")]
         public async Task<IActionResult> MessageUpdate([FromBody]Update update)
         {
+            Console.WriteLine("I'm here'");
             var message = update.Message;
             try
             {
