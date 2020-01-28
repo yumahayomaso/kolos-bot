@@ -14,9 +14,9 @@ namespace Untappd.KolosBot.Controllers
     [ApiController]
     public class TelegramController : ControllerBase
     {
-        private readonly TelegramBotClient _botClient;
+        private readonly ITelegramBotClient _botClient;
 
-        public TelegramController(TelegramBotClient botClient)
+        public TelegramController(ITelegramBotClient botClient)
         {
             _botClient = botClient;
         }
