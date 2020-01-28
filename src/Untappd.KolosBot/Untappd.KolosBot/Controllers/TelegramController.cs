@@ -21,6 +21,12 @@ namespace Untappd.KolosBot.Controllers
             _botClient = botClient;
         }
 
+        [HttpGet("check")]
+        public async Task<IActionResult> MessageGet()
+        {
+            return Ok("Zalupa");
+        }
+
         [HttpPost("webhook")]
         public async Task<IActionResult> MessageUpdate(Update update)
         {
