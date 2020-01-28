@@ -15,9 +15,10 @@ namespace Untappd.KolosBot
         {
             try
             {
-                var host = CreateHostBuilder(args).Build();
-                var token =  Environment.GetEnvironmentVariable("BOT_TOKEN");
+                var token = Environment.GetEnvironmentVariable("BOT_TOKEN");
                 _botClient = new TelegramBotClient(token);
+
+                var host = CreateHostBuilder(args).Build();
                 //TODO move to startup
                 var webhook = await _botClient.GetWebhookInfoAsync();
                 if (string.IsNullOrWhiteSpace(webhook.Url))
