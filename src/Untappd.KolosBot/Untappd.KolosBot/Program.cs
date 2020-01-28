@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Telegram.Bot;
@@ -17,6 +19,7 @@ namespace Untappd.KolosBot
     {
         private static ITelegramBotClient _botClient;
         private static KolosDbContext _dbContext;
+        private static Timer _timer;
 
         public static void Main(string[] args)
         {
@@ -28,6 +31,20 @@ namespace Untappd.KolosBot
                 _botClient.OnMessage += Bot_OnMessage;
                 _botClient.StartReceiving();
 
+                _timer = new Timer();
+                _timer.Interval = TimeSpan.FromMinutes(28).Milliseconds;
+                _timer.AutoReset = true;
+                _timer.Elapsed += delegate(object sender, ElapsedEventArgs eventArgs)
+                {
+                    var ukrHour = DateTime.UtcNow.Hour;
+                    if (ukrHour < 7 && ukrHour > 0)
+                        return;
+                    
+                    var httpClient = new HttpClient();
+                    httpClient.GetAsync("https://zkolos-bot.herokuapp.com/").GetAwaiter().GetResult();
+                };
+                
+                _timer.Start();
                 host.Run();
             }
             catch (Exception e)
