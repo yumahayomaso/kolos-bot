@@ -115,7 +115,12 @@ namespace Untappd.KolosBot
             "Йонзолик",
             "Йосиф",
             "Йосип",
-            "Йося"
+            "Йося",
+            "Йосу",
+            "Йосю",
+            "Йонз",
+            "Йондз",
+            "Йос",
         };
 
         private static List<string> yosaJokeList = new List<string>
