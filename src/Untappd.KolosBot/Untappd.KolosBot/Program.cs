@@ -90,7 +90,7 @@ namespace Untappd.KolosBot
                     );
                 }
 
-                if (e.Message.Text != null && yosaList.Any(x => e.Message.Text.Contains(x)))
+                if (e.Message.Text != null && yosaList.Any(x => e.Message.Text.Contains(x, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     var rand = new Random();
                     var randIndex = rand.Next(0, yosaJokeList.Count - 1);
