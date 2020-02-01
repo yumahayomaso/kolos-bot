@@ -50,7 +50,5 @@ namespace Untappd.KolosBot
                     .UseUrls("http://*:" + port);
                 });
         }
-
-
     }
 }
