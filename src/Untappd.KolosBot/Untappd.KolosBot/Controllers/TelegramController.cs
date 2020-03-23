@@ -12,6 +12,7 @@ using Untappd.KolosBot.Infrastucture;
 namespace Untappd.KolosBot.Controllers
 {
     [ApiController]
+    [Route("telegram")]
     public class TelegramController : ControllerBase
     {
         private readonly ITelegramBotClient _botClient;
