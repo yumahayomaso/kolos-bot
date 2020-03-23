@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.InputFiles;
-using Untappd.KolosBot.Infrastucture;
 
 namespace Untappd.KolosBot.Controllers
 {
@@ -15,76 +8,69 @@ namespace Untappd.KolosBot.Controllers
     [Route("telegram")]
     public class TelegramController : ControllerBase
     {
-        private readonly ITelegramBotClient _botClient;
-
-        public TelegramController(ITelegramBotClient botClient)
-        {
-            _botClient = botClient;
-        }
-
         [HttpGet("check")]
         public async Task<IActionResult> MessageGet()
         {
             return Ok("Zalupa");
         }
 
-        [HttpPost("webhook")]
-        public async Task<IActionResult> MessageUpdate([FromBody]Update update)
-        {
-            var message = update.Message;
-            try
-            {
-                if (message.Text == "/pio")
-                {
-                    var parser = new UntappdParser();
-                    var beers = await parser.GetBeers();
+        //[HttpPost("webhook")]
+        //public async Task<IActionResult> MessageUpdate([FromBody]Update update)
+        //{
+        //    var message = update.Message;
+        //    try
+        //    {
+        //        if (message.Text == "/pio")
+        //        {
+        //            var parser = new UntappdParser();
+        //            var beers = await parser.GetBeers();
 
-                    foreach (var beer in beers)
-                    {
-                        await _botClient.SendPhotoAsync(message.Chat.Id, new InputOnlineFile(new Uri(beer.ImageUrl)));
-                        await _botClient.SendTextMessageAsync(
-                            chatId: message.Chat,
-                            text: beer.ToString(),
-                            ParseMode.Markdown
-                        );
-                    }
-                }
+        //            foreach (var beer in beers)
+        //            {
+        //                await _botClient.SendPhotoAsync(message.Chat.Id, new InputOnlineFile(new Uri(beer.ImageUrl)));
+        //                await _botClient.SendTextMessageAsync(
+        //                    chatId: message.Chat,
+        //                    text: beer.ToString(),
+        //                    ParseMode.Markdown
+        //                );
+        //            }
+        //        }
 
 
-                if (update.Type == UpdateType.Message && message.Type == MessageType.Text && message.Text.Contains("/pidor"))
-                {
-                    await Task.Delay(5000);
-                    await _botClient.SendTextMessageAsync(
-                        chatId: message.Chat,
-                        text: "Оййй та бля пацани"
-                    );
-                    await _botClient.SendTextMessageAsync(
-                        chatId: message.Chat,
-                        text: "І так панятно що"
-                    );
-                    await _botClient.SendTextMessageAsync(
-                        chatId: message.Chat,
-                        text: "ЙОНЗА ПЕДРИЛО"
-                    );
-                }
+        //        if (update.Type == UpdateType.Message && message.Type == MessageType.Text && message.Text.Contains("/pidor"))
+        //        {
+        //            await Task.Delay(5000);
+        //            await _botClient.SendTextMessageAsync(
+        //                chatId: message.Chat,
+        //                text: "Оййй та бля пацани"
+        //            );
+        //            await _botClient.SendTextMessageAsync(
+        //                chatId: message.Chat,
+        //                text: "І так панятно що"
+        //            );
+        //            await _botClient.SendTextMessageAsync(
+        //                chatId: message.Chat,
+        //                text: "ЙОНЗА ПЕДРИЛО"
+        //            );
+        //        }
 
-                if (message.Text != null && yosaList.Any(x => message.Text.Contains(x, StringComparison.InvariantCultureIgnoreCase)))
-                {
-                    var rand = new Random();
-                    var randIndex = rand.Next(0, yosaJokeList.Count - 1);
-                    await _botClient.SendTextMessageAsync(
-                        chatId: message.Chat,
-                        text: yosaJokeList[randIndex]
-                    );
-                }
-            }
-            catch (Exception exception)
-            {
-                // ignored
-            }
+        //        if (message.Text != null && yosaList.Any(x => message.Text.Contains(x, StringComparison.InvariantCultureIgnoreCase)))
+        //        {
+        //            var rand = new Random();
+        //            var randIndex = rand.Next(0, yosaJokeList.Count - 1);
+        //            await _botClient.SendTextMessageAsync(
+        //                chatId: message.Chat,
+        //                text: yosaJokeList[randIndex]
+        //            );
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        // ignored
+        //    }
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
         private static List<string> yosaList = new List<string>()
         {

@@ -18,16 +18,16 @@ namespace Untappd.KolosBot
     public class Program
     {
         private static ITelegramBotClient _botClient;
-        private static KolosDbContext _dbContext;
         private static Timer _timer;
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             try
             {
                 var host = CreateHostBuilder(args).Build();
                 var token = Environment.GetEnvironmentVariable("BOT_TOKEN");
                 _botClient = new TelegramBotClient(token);
+                await _botClient.DeleteWebhookAsync();
                 _botClient.OnMessage += Bot_OnMessage;
                 _botClient.StartReceiving();
 
@@ -35,11 +35,11 @@ namespace Untappd.KolosBot
                 _timer.Elapsed += delegate (object sender, ElapsedEventArgs eventArgs)
                 {
                     var httpClient = new HttpClient();
-                    httpClient.GetAsync("https://zkolos-bot.herokuapp.com/telegram/check").GetAwaiter().GetResult();
+                    var result = httpClient.GetAsync("https://zkolos-bot.herokuapp.com/telegram/check").GetAwaiter().GetResult();
                 };
 
                 _timer.Start();
-                host.Run();
+                await host.RunAsync();
             }
             catch (Exception e)
             {
